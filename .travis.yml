@@ -1,0 +1,25 @@
+language: go
+go: 1.12
+
+install:
+  - GO111MODULE=on
+  - go mod download
+  - go install ./... && GOOS=windows go install ./... && GOOS=darwin go install ./...
+
+script:
+  - cd $HOME/gopath/bin
+  - zip ./fistchain-linux-amd64.zip fistd fistctl addblock promptsecret
+  - cd $HOME/gopath/bin/darwin_amd64
+  - zip ../fistchain-darwin-amd64.zip fistd fistctl addblock promptsecret
+  - cd $HOME/gopath/bin/windows_amd64
+  - zip ../fistchain-windows-amd64.zip fistd.exe fistctl.exe addblock.exe promptsecret.exe
+deploy:
+  provider: releases
+  api_key:
+    secure: SEx561QiCX98XQRlUv+5rs3p6LC+bbggajvXpBco0fl4vr21m+gxi1pNGwt/x98JVl/YWiYRFjfJWAPKu6MdirTQdwnxhOVa95j4XrrOGjGmT51QewNl5yADTGjccZQXdAIA9bpzbUFCpbSgxNbabhytZRLqL4Gb1Qpoo2p8pOb0Xi7hVgq70r809mIyR4+riVmGCjGgOkT9Yi9jeOxhGo+bIpGDvCnop4taNTJHBuTBg3ywcmJIqQkfzleTXWpD2K/Rd+0bQTvIuq9TurXSxTNAvV+iQOguPUE+JdxUxWQlW9n8vrvWA6gvrQU6fZiWb8j/Hbv2zFU5g8l1HMgRZTexgvrQ5oKujOtCv7Yn/jpSmoOpXgPzI64kGhmb+a2a5+dqzkHTa7xFCam/my+12EowvdtQ/kKKD1f+uSj4+oAMzSSGcA0/6P80BpYJukXdwQ91SC8r1V67akx4t5pa1viHnJXLeV+1VSmqjWxPjWzGpexGhOeUaBOPDHh6WmhymNvB3KhQWmo2PWOj7OzajwgvT2103Kl3OzuMRYTIS2F/OFDycgrnnI4G+n3EwPCXNDrBngv+r6H7R6d0hw1TzyeHl57VM/l9j1IBUP44dJWiJkwDmeBXgWBOCvY7PIhFq/mVNYwv7UXRXw5oXvv9B63TzMBSmXtwDb/xk2DraF8=
+  skip_cleanup: true
+  file_glob: true
+  file: $HOME/gopath/bin/*.zip
+  on:
+    tags: true
+    repo: fistchain/fistd

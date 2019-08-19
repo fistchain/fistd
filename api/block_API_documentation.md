@@ -12,7 +12,7 @@ File downloads are served from the `/download` path.
 The [Insight API](https://github.com/bitpay/insight-api) is accessible via HTTP
 via REST or WebSocket.
 
-See the [Insight API documentation](api/Insight_API_documentation.md) for
+See the [Insight API documentation](Insight_API_documentation.md) for
 further details.
 
 ### fistchain API
